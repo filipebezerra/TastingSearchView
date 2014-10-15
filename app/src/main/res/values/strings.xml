@@ -3,5 +3,7 @@
 
     <string name="app_name">Tasting SearchView</string>
     <string name="ic_action_search">Search</string>
+    <string name="search_hint">Search now</string>
+    <string name="title_activity_search_results">Search Results</string>
 
 </resources>

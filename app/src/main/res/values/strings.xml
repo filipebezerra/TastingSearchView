@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">Tasting SearchView</string>
+    <string name="ic_action_search">Search</string>
 
 </resources>

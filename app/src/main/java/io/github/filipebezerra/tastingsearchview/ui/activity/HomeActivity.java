@@ -1,4 +1,4 @@
-package io.github.filipebezerra.tastingsearchview;
+package io.github.filipebezerra.tastingsearchview.ui.activity;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import io.github.filipebezerra.tastingsearchview.R;
 
 public class HomeActivity extends Activity {
 

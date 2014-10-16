@@ -9,39 +9,47 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.activity.HomeActivity"
             android:label="@string/app_name">
 
+            <!-- Default, Launcher and Main Activity -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
+            <!-- Where is the SearchView Widget -->
             <meta-data android:name="android.app.default_searchable"
-                android:value=".SearchResultsActivity" />
+                android:value=".ui.activity.SearchResultsActivity" />
         </activity>
 
         <activity
-            android:name=".SearchResultsActivity"
+            android:name=".ui.activity.SearchResultsActivity"
             android:label="@string/title_activity_search_results"
-            android:parentActivityName=".HomeActivity"
+            android:parentActivityName=".ui.activity.HomeActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
             android:launchMode="singleTop">
 
+            <!-- To handle the search request -->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
+            <!-- To enable e configure the HomeBottom -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="io.github.filipebezerra.tastingsearchview.HomeActivity" />
+                android:value=".io.activity.HomeActivity" />
 
+            <!-- To load searchable configurations -->
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
 
         </activity>
 
+        <!-- Suggestions provider -->
         <provider
             android:authorities="io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider"
             android:name=".provider.SuggestionsProvider" />

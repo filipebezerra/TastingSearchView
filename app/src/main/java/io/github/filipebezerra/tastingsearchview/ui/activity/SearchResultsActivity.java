@@ -1,4 +1,4 @@
-package io.github.filipebezerra.tastingsearchview;
+package io.github.filipebezerra.tastingsearchview.ui.activity;
 
 import android.app.Activity;
 import android.app.SearchManager;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.github.filipebezerra.tastingsearchview.R;
 import io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider;
 
 public class SearchResultsActivity extends Activity {

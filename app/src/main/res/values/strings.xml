@@ -6,7 +6,6 @@
     <string name="search_hint">Search now</string>
     <string name="title_activity_search_results">Search Results</string>
 
-
     <string name="title_activity_base">BaseActivity</string>
     <string name="ic_action_clear_suggestions">Clear Suggestions</string>
     <string name="search_settings">@string/search_hint</string>

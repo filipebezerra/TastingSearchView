@@ -1,15 +1,12 @@
 package io.github.filipebezerra.tastingsearchview.ui.activity;
 
-import android.app.Activity;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.view.Menu;
-import android.widget.SearchView;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +14,9 @@ import java.util.Date;
 import io.github.filipebezerra.tastingsearchview.R;
 import io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider;
 
-public class SearchResultsActivity extends Activity {
+public class SearchResultsActivity extends BaseActivity {
+
+    private static final String TAG = SearchResultsActivity.class.getName();
 
     private TextView searchResult;
 
@@ -25,79 +24,42 @@ public class SearchResultsActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-
         searchResult = (TextView) findViewById(R.id.search_result);
+        searchResult.setMovementMethod(new ScrollingMovementMethod());
 
         handleIntent(getIntent());
-
-        // enable "type-to-search" functionality
-        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_global, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.ic_action_search).getActionView();
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        searchManager.setOnCancelListener(new SearchManager.OnCancelListener() {
-            @Override
-            public void onCancel() {
-                Toast.makeText(SearchResultsActivity.this, "OnCancelListener", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                Toast.makeText(SearchResultsActivity.this, "OnDismissListener", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "SearchResultsActivity>onPause", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "event <onPause> called");
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        Toast.makeText(this, "SearchResultsActivity>onRestart", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "event <onRestart> called");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "SearchResultsActivity>onResume", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public boolean onSearchRequested() {
-        Bundle appData = new Bundle();
-        appData.putString(HomeActivity.COME_FROM, SearchResultsActivity.class.getSimpleName());
-        startSearch(null, false, appData, false);
-
-        Toast.makeText(this, "SearchResultsActivity>onSearchRequested", Toast.LENGTH_SHORT).show();
-
-        return true;
+        Log.d(TAG, "event <onResume> called");
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d(TAG, "event <onNewIntent> called");
+
         setIntent(intent);
         handleIntent(intent);
     }
 
     private void handleIntent(Intent intent) {
+        Log.d(TAG, String.format("method <handleIntent> called with action <%s>", intent.getAction()));
+
         if (Intent.ACTION_SEARCH == intent.getAction()) {
             String query = intent.getStringExtra(SearchManager.QUERY);
 
@@ -109,8 +71,8 @@ public class SearchResultsActivity extends Activity {
 
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
 
-            sb.append(String.format("Pesquisou a palavra %s em %s",
-                    query, formatter.format(new Date())));
+            sb.append(String.format("%s - Pesquisou a palavra %s",
+                    formatter.format(new Date()), query));
 
             searchResult.setText(sb.toString());
 

@@ -1,88 +1,24 @@
 package io.github.filipebezerra.tastingsearchview.ui.activity;
 
-import android.app.Activity;
-import android.app.SearchManager;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.SearchView;
-import android.widget.Toast;
+import android.util.Log;
 
 import io.github.filipebezerra.tastingsearchview.R;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends BaseActivity {
 
-    public static final String COME_FROM = "COME_FROM";
+    private static final String TAG = HomeActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        // enable "type-to-search" functionality
-        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_global, menu);
-
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView searchView = (SearchView) menu.findItem(R.id.ic_action_search).getActionView();
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false);
-        searchView.setSubmitButtonEnabled(true);
-
-        searchManager.setOnCancelListener(new SearchManager.OnCancelListener() {
-            @Override
-            public void onCancel() {
-                Toast.makeText(HomeActivity.this, "OnCancelListener", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                Toast.makeText(HomeActivity.this, "OnDismissListener", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        switch (itemId) {
-
-            // for smaller screen the does not place a SearchView Widget on ActionBar, but a
-            // a menu in the overflow menu.
-            case R.id.ic_action_search:
-                onSearchRequested();
-        }
-
-        return true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Toast.makeText(this, "HomeActivity>onPause", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "event <onPause> called");
     }
 
-    // is called when the user signals the desire to start a search
-    @Override
-    public boolean onSearchRequested() {
-        Bundle appData = new Bundle();
-        appData.putString(COME_FROM, HomeActivity.class.getSimpleName());
-        startSearch(null, false, appData, false);
-
-        Toast.makeText(this, "HomeActivity>onSearchRequested", Toast.LENGTH_SHORT).show();
-
-        return true;
-    }
 }

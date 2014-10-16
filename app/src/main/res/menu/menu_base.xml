@@ -1,4 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:compat="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.activity.BaseActivity" >
 
@@ -6,15 +7,15 @@
         android:id="@+id/ic_action_search"
         android:title="@string/ic_action_search"
         android:icon="@drawable/ic_action_search"
-        android:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView"
+        compat:showAsAction="collapseActionView|ifRoom"
+        compat:actionViewClass="android.support.v7.widget.SearchView"
         />
 
     <item
         android:id="@+id/ic_action_clear_suggestions"
         android:title="@string/ic_action_clear_suggestions"
         android:icon="@android:drawable/ic_menu_recent_history"
-        android:showAsAction="ifRoom"
+        compat:showAsAction="ifRoom"
         />
 
 </menu>

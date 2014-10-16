@@ -60,32 +60,37 @@ public class SearchResultsActivity extends BaseActivity {
     private void handleIntent(Intent intent) {
         Log.d(TAG, String.format("method <handleIntent> called with action <%s>", intent.getAction()));
 
-        if (Intent.ACTION_SEARCH == intent.getAction()) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+        if (intent.getAction().equals(Intent.ACTION_SEARCH)) {
+            doSearch(intent.getStringExtra(SearchManager.QUERY));
+        } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
 
-            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-                    SuggestionsProvider.AUTHORITY, SuggestionsProvider.MODE);
-            suggestions.saveRecentQuery(query, null);
+        }
+    }
 
-            StringBuilder sb = new StringBuilder(searchResult.getText());
+    private void doSearch(String query) {
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
+        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                SuggestionsProvider.AUTHORITY, SuggestionsProvider.MODE);
+        suggestions.saveRecentQuery(query, null);
 
-            sb.append(String.format("%s - Pesquisou a palavra %s",
-                    formatter.format(new Date()), query));
+        StringBuilder sb = new StringBuilder(searchResult.getText());
 
-            searchResult.setText(sb.toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss ");
 
-            Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
+        sb.append(String.format("%s - Pesquisou a palavra %s",
+                formatter.format(new Date()), query));
 
-            if (appData != null) {
-                String comeFrom = appData.getString(HomeActivity.COME_FROM);
+        searchResult.setText(sb.toString());
 
-                StringBuilder newSb = new StringBuilder(searchResult.getText());
-                newSb.append(String.format("Extra data = %s", comeFrom));
+        Bundle appData = getIntent().getBundleExtra(SearchManager.APP_DATA);
 
-                searchResult.setText(newSb.toString());
-            }
+        if (appData != null) {
+            String comeFrom = appData.getString(HomeActivity.COME_FROM);
+
+            StringBuilder newSb = new StringBuilder(searchResult.getText());
+            newSb.append(String.format("Extra data = %s", comeFrom));
+
+            searchResult.setText(newSb.toString());
         }
     }
 

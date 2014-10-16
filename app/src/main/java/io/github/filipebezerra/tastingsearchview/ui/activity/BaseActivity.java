@@ -1,20 +1,21 @@
 package io.github.filipebezerra.tastingsearchview.ui.activity;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import io.github.filipebezerra.tastingsearchview.R;
 import io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider;
 
-public class BaseActivity extends Activity {
+public class BaseActivity extends ActionBarActivity {
 
     private static final String TAG = BaseActivity.class.getName();
 
@@ -34,7 +35,9 @@ public class BaseActivity extends Activity {
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.ic_action_search).getActionView();
+        MenuItem searchItem = menu.findItem(R.id.ic_action_search);
+
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false);
@@ -50,6 +53,20 @@ public class BaseActivity extends Activity {
             @Override
             public void onDismiss() {
                 Log.d(TAG, "event <setOnDismissListener> called");
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                Log.d(TAG, "event <onMenuItemActionExpand> called");
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                Log.d(TAG, "event <onMenuItemActionCollapse> called");
+                return true;
             }
         });
 

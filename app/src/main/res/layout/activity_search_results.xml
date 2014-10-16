@@ -14,7 +14,6 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical"
         android:scrollbarStyle="insideInset"
-        android:gravity="center_horizontal"
-        android:text="ola mundo"/>
+        android:gravity="center_horizontal"/>
 
 </RelativeLayout>

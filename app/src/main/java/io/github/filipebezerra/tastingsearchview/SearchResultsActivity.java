@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.view.Menu;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider;
 
 public class SearchResultsActivity extends Activity {
 
@@ -96,6 +99,10 @@ public class SearchResultsActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH == intent.getAction()) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+
+            SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+                    SuggestionsProvider.AUTHORITY, SuggestionsProvider.MODE);
+            suggestions.saveRecentQuery(query, null);
 
             StringBuilder sb = new StringBuilder(searchResult.getText());
 

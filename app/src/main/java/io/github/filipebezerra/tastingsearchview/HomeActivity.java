@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -46,6 +47,21 @@ public class HomeActivity extends Activity {
                 Toast.makeText(HomeActivity.this, "OnDismissListener", Toast.LENGTH_SHORT).show();
             }
         });
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        switch (itemId) {
+
+            // for smaller screen the does not place a SearchView Widget on ActionBar, but a
+            // a menu in the overflow menu.
+            case R.id.ic_action_search:
+                onSearchRequested();
+        }
 
         return true;
     }

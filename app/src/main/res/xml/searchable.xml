@@ -6,4 +6,8 @@
     android:imeOptions="actionSearch"
     android:voiceSearchMode="showVoiceSearchButton|launchRecognizer"
     android:voiceLanguageModel="web_search"
-    android:voicePromptText="Diga algo amigo"/>
+    android:voicePromptText="Diga algo amigo"
+
+    android:searchSuggestAuthority="io.github.filipebezerra.tastingsearchview.provider.SuggestionsProvider"
+    android:searchSuggestSelection="query=?"
+    android:searchSuggestThreshold="2"/>
